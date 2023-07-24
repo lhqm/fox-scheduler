@@ -32,6 +32,7 @@ public class ScheduleTaskScan {
                     values.put("twice",annotation.twice());
                     values.put("type",annotation.type());
                     values.put("cron",annotation.cron());
+                    values.put("fresh",annotation.fresh());
                     AnnotatedMethod annotatedMethod = new AnnotatedMethod(clazz, method,values);
                     annotatedMethods.add(annotatedMethod);
                 }
