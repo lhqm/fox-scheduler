@@ -7,6 +7,7 @@
         <module>fox-job</module>
         <module>fox-framework</module>
         <module>fox-rpc</module>
+        <module>fox-client</module>
     </modules>
 
     <parent>
