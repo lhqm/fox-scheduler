@@ -1,0 +1,4 @@
+fox:
+  schedule:
+    path: "com.fox.tasks"
+    name: "可控调度客户端1"
