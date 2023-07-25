@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>com.fox</groupId>
-            <artifactId>fox-framework</artifactId>
+            <artifactId>fox-rpc</artifactId>
             <version>0.0.1</version>
         </dependency>
     </dependencies>

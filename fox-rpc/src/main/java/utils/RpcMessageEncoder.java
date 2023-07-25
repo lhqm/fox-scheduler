@@ -1,4 +1,4 @@
-package com.fox.utils;
+package utils;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
