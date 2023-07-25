@@ -1,8 +1,9 @@
-package com.fox.utils.client;
+package com.fox.utils;
 
-import com.alibaba.fastjson.JSONObject;
 import com.fox.annotation.FoxSchedule;
-import com.fox.entity.AnnotatedMethod;
+import com.alibaba.fastjson.JSONObject;
+import com.fox.entity.TaskedMethod;
+import com.fox.utils.client.PackageScanner;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -16,9 +17,8 @@ import java.util.List;
  * 扫描指定的包路径下包含某个注解的方法和
  */
 public class ScheduleTaskScan {
-
-    public static List<AnnotatedMethod> processAnnotations(String packageName) throws ClassNotFoundException, IOException {
-        List<AnnotatedMethod> annotatedMethods = new ArrayList<>();
+    public static List<TaskedMethod> processAnnotations(String packageName) throws ClassNotFoundException, IOException {
+        List<TaskedMethod> taskedMethods = new ArrayList<>();
         List<Class<?>> classes = PackageScanner.scanPackage(packageName);
 
         for (Class<?> clazz : classes) {
@@ -33,11 +33,11 @@ public class ScheduleTaskScan {
                     values.put("type",annotation.type());
                     values.put("cron",annotation.cron());
                     values.put("fresh",annotation.fresh());
-                    AnnotatedMethod annotatedMethod = new AnnotatedMethod(clazz, method,values);
-                    annotatedMethods.add(annotatedMethod);
+                    TaskedMethod taskedMethod = new TaskedMethod(clazz, method,values);
+                    taskedMethods.add(taskedMethod);
                 }
             }
         }
-        return annotatedMethods;
+        return taskedMethods;
     }
 }

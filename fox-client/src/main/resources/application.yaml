@@ -1,0 +1,8 @@
+fox:
+#  接受调度的jar包的配置
+  schedule:
+    path: "com.fox.tasks" #扫描包路径
+    name: "可控调度客户端1" #jar包名称（用于构建调度目录）
+  server:
+    address: "127.0.0.1" #服务地址
+    port: 9090 #服务器端口

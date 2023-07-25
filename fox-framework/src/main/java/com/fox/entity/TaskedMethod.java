@@ -13,7 +13,7 @@ import java.lang.reflect.Method;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class AnnotatedMethod implements Serializable {
+public class TaskedMethod implements Serializable {
     private Class<?> clazz;
     private Method method;
     private JSONObject annotationValue;

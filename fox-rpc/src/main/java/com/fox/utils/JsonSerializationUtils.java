@@ -1,4 +1,4 @@
-package utils;
+package com.fox.utils;
 
 import com.alibaba.fastjson.JSON;
 

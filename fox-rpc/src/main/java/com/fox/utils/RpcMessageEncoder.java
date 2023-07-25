@@ -1,10 +1,10 @@
-package utils;
+package com.fox.utils;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import io.netty.util.CharsetUtil;
-import protocol.RpcMessage;
+import com.fox.protocol.RpcMessage;
 
 /**
  * @author 离狐千慕
