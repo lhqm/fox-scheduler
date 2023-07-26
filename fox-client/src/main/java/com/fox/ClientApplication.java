@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2023/7/24 13:55
  */
 @SpringBootApplication
-@EnableFoxScheduler(packageName = "com.fox")
+@EnableFoxScheduler
 public class ClientApplication {
     public static void main(String[] args){
         SpringApplication.run(ClientApplication.class,args);

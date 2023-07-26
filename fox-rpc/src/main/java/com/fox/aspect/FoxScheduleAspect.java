@@ -5,12 +5,14 @@ import com.fox.entity.TaskedMethod;
 import com.fox.utils.ScheduleTaskScan;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -19,13 +21,12 @@ import java.util.List;
 /**
  * @author 离狐千慕
  * @version 1.0
- * @date 2023/7/25 14:04
- * 启动类切面。用于初始化构建任务调度器
+ * @date 2023/7/26 17:03
  */
-@Component
 @Aspect
 @Slf4j
-public class ScheduleAspect {
+@Component
+public class FoxScheduleAspect {
     //    配置扫描路径
     @Value(value = "${fox.schedule.path:com}")
     private String packageName;
@@ -35,34 +36,26 @@ public class ScheduleAspect {
     //    配置主机接收端口
     @Value(value = "${fox.server.port:8080}")
     private Integer port;
-//    制造切面
-    @Pointcut("@annotation(com.fox.annotation.EnableFoxScheduler)")
-    private void init(){
+//    自动化配置逻辑，织入主启动类之后
 
-    }
-//    横切逻辑，织入主启动类之后
-    @After(value = "init()")
-    public void InitScanAndSend(JoinPoint joinPoint){
+    public void InitScanAndSend(String name,String appPath) throws Throwable {
         // 在应用程序启动后执行相关方法的逻辑
         // 通过切点仲裁包体逻辑
 //        没有设置外置包名，通过仲裁获取注解值的包名
-        if (packageName.equals("")){
+        log.info("等待注册...");
+        log.info("客户端主体程序已启动,开始注册调度方法");
+        if (packageName.equals("com")){
 //            获取注解，通过注解来判断是否有包名，如果还没有，就直接扫描全包
-            Signature signature = joinPoint.getSignature();
-            MethodSignature methodSignature = (MethodSignature) signature;
-            Method method = methodSignature.getMethod();
-            EnableFoxScheduler foxScheduler = method.getDeclaredAnnotation(EnableFoxScheduler.class);
-            String name = foxScheduler.packageName();
+            log.warn("未检索到文件配置中的扫描路径配置,fox-scheduler将向下搜索...");
 //            不为以下三种不可被扫描的状况，赋值
             if(!name.equals("") && !name.equals("\\") && !name.equals("/")){
+                log.info("检索到注解配置packageName={}",name);
                 packageName=name;
             }else {
-                String appPath = signature.getClass().getPackage().getName();
-                System.out.println(appPath);
+                log.warn("未检索到任何配置！将扫描启动器路径:{}",appPath);
                 packageName=appPath;
             }
         }
-        log.info("客户端主体程序已启动,开始注册调度方法");
         log.info("调度扫描路径为:{},如果不在预期之内，请修改配置后重新启动",packageName);
         try {
 //            扫描包体，递归获取所有带有该注解的类
