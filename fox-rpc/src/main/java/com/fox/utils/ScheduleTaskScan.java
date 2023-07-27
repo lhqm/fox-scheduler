@@ -33,7 +33,7 @@ public class ScheduleTaskScan {
                     values.put("type",annotation.type());
                     values.put("cron",annotation.cron());
                     values.put("fresh",annotation.fresh());
-                    TaskedMethod taskedMethod = new TaskedMethod(clazz, method,values);
+                    TaskedMethod taskedMethod = new TaskedMethod(clazz.getName(), method.getName(),values);
                     taskedMethods.add(taskedMethod);
                 }
             }

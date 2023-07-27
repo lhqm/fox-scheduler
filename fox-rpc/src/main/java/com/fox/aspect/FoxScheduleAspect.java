@@ -3,6 +3,8 @@ package com.fox.aspect;
 import com.fox.client.InitInvocation;
 import com.fox.entity.TaskedMethod;
 import com.fox.utils.ScheduleTaskScan;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.Invocation;
 import org.aspectj.lang.annotation.Aspect;
@@ -38,9 +40,8 @@ public class FoxScheduleAspect {
     private InitInvocation initInvocation;
 //    自动化配置逻辑，织入主启动类之后
 
-    public void InitScanAndSend(String name,String appPath) throws Throwable {
+    public void InitScanAndSend(String name,String appPath) {
         // 在应用程序启动后执行相关方法的逻辑
-        // 通过切点仲裁包体逻辑
 //        没有设置外置包名，通过仲裁获取注解值的包名
         log.info("等待注册...");
         log.info("客户端主体程序已启动,开始注册调度方法");
@@ -62,14 +63,26 @@ public class FoxScheduleAspect {
             List<TaskedMethod> methodList = ScheduleTaskScan.processAnnotations(packageName);
 //            循环打印方法，提示客户端可控调度方案读取状况
             methodList.forEach(item->{
-                log.info("fox-scheduler扫描到客户端可控调度方法:{},配置参数为:{}",item.getMethod().getName(),item.getAnnotationValue());
+                log.info("fox-scheduler扫描到客户端可控调度方法:{},配置参数为:{}",item.getMethod(),item.getAnnotationValue());
             });
             log.info("扫描完毕,请仔细查看上述任务调度方法以及参数是否有错误或遗漏");
-            initInvocation.sendTasks(methodList,addr,port,clientName);
-            log.info("所有任务已全部同步到远端");
+            Thread thread=new Thread(()->{
+                initInvocation.sendTasks(methodList,addr,port,clientName);
+                log.info("所有任务已全部同步到远端");
+            });
+            thread.start();
         } catch (Exception e) {
-            log.error("扫描失败!请检查扫描路径是否配置正确!");
+            log.error("应用启动失败...");
             throw new RuntimeException(e);
+        }
+    }
+
+
+    private static class ClientHandler extends SimpleChannelInboundHandler<Object> {
+        @Override
+        protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+            // 处理服务端响应
+            System.out.println(msg.toString());
         }
     }
 }

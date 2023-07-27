@@ -8,6 +8,7 @@
         <module>fox-framework</module>
         <module>fox-rpc</module>
         <module>fox-client</module>
+        <module>fox-server</module>
     </modules>
 
     <parent>
