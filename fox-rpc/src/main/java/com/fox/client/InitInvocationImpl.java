@@ -1,5 +1,6 @@
 package com.fox.client;
 
+import com.fox.entity.ClientData;
 import com.fox.entity.TaskedMethod;
 import com.fox.utils.RpcMessageDecoder;
 import io.netty.bootstrap.Bootstrap;
@@ -24,9 +25,9 @@ import java.util.List;
  */
 @Component
 @Slf4j
-public class TaskInfoRegister implements InitInvocation {
+public class InitInvocationImpl implements InitInvocation {
     @Override
-    public void sendTasks(List<TaskedMethod> taskedMethods,String addr,Integer port) {
+    public void sendTasks(List<TaskedMethod> taskedMethods,String addr,Integer port,String name) {
         log.info("RPC模块准备发送任务到服务端,请等候...");
         EventLoopGroup group = new NioEventLoopGroup();
         try {
@@ -50,7 +51,7 @@ public class TaskInfoRegister implements InitInvocation {
             }
             // 发送对象集合到服务端
             try {
-                future.channel().writeAndFlush(taskedMethods).sync();
+                future.channel().writeAndFlush(new ClientData(taskedMethods,name)).sync();
             } catch (InterruptedException e) {
                 log.error("数据发送遇到意外状况!");
                 throw new RuntimeException(e);

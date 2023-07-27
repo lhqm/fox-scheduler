@@ -1,21 +1,16 @@
 package com.fox.aspect;
 
-import com.fox.annotation.EnableFoxScheduler;
+import com.fox.client.InitInvocation;
 import com.fox.entity.TaskedMethod;
 import com.fox.utils.ScheduleTaskScan;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
-import org.aspectj.lang.annotation.After;
+import org.aopalliance.intercept.Invocation;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -30,12 +25,17 @@ public class FoxScheduleAspect {
     //    配置扫描路径
     @Value(value = "${fox.schedule.path:com}")
     private String packageName;
+    //    配置调度方案名称
+    @Value(value = "${fox.schedule.name:未命名调度客户端}")
+    private String clientName;
     //    配置主机远端地址
     @Value(value = "${fox.server.address:127.0.0.1}")
     private String addr;
     //    配置主机接收端口
     @Value(value = "${fox.server.port:8080}")
     private Integer port;
+    @Autowired
+    private InitInvocation initInvocation;
 //    自动化配置逻辑，织入主启动类之后
 
     public void InitScanAndSend(String name,String appPath) throws Throwable {
@@ -65,7 +65,7 @@ public class FoxScheduleAspect {
                 log.info("fox-scheduler扫描到客户端可控调度方法:{},配置参数为:{}",item.getMethod().getName(),item.getAnnotationValue());
             });
             log.info("扫描完毕,请仔细查看上述任务调度方法以及参数是否有错误或遗漏");
-//            initInvocation.sendTasks(methodList,addr,port);
+            initInvocation.sendTasks(methodList,addr,port,clientName);
             log.info("所有任务已全部同步到远端");
         } catch (Exception e) {
             log.error("扫描失败!请检查扫描路径是否配置正确!");
