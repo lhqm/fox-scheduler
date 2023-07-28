@@ -47,8 +47,8 @@ public class FoxServerAspect {
 
             // 绑定端口，开始接收连接
             ChannelFuture future = bootstrap.bind(port).sync();
-            System.out.println("启动成功，正在等待客户端请求");
-            PrintFireFox.printFireFox();
+            log.info("Netty启动成功，监听端口为{},正在等待客户端请求",port);
+            PrintFireFox.printServer();
             // 等待服务器套接字关闭
             future.channel().closeFuture().sync();
         } finally {

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fox.entity.ClientData;
 import com.fox.entity.TaskedMethod;
+import com.fox.utils.banner.PrintFireFox;
 import com.foxrpc.protocol.RpcMessage;
 import com.foxrpc.utils.RpcMessageEncoder;
 import io.netty.bootstrap.Bootstrap;
@@ -50,6 +51,8 @@ public class InitInvocationImpl implements InitInvocation {
             ChannelFuture future = null;
             try {
                 future = bootstrap.connect(addr, port).sync();
+//                打印客户端标志
+                PrintFireFox.printClient();
             } catch (Exception e) {
                 log.error("发送失败,服务器地址或端口错误，请查证后再试！");
                 throw new RuntimeException(e);

@@ -26,11 +26,8 @@ public class FoxScheduleAnnotationConfiguration {
 
     @PostConstruct
     public void executeOnAnnotation() {
-        Map<String, Object> withAnnotation = applicationContext.getBeansWithAnnotation(Async.class);
-        withAnnotation.forEach((k,v)->{
-            System.out.println(k);
-        });
         Map<String, Object> beansWithAnnotation = applicationContext.getBeansWithAnnotation(EnableFoxScheduler.class);
+        if (beansWithAnnotation.size()==0){return;}
         for (Object bean : beansWithAnnotation.values()) {
 //            获取类所在包路径
             String appPackage = bean.getClass().getPackage().getName();

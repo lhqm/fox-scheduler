@@ -37,11 +37,11 @@ public class FoxServerAnnotationConfiguration {
     @PostConstruct
     public void executeOnAnnotation() {
         Map<String, Object> beansWithAnnotation = applicationContext.getBeansWithAnnotation(EnableFoxServer.class);
+        if (beansWithAnnotation.size()==0){return;}
         boolean started=true;
         for (Object bean : beansWithAnnotation.values()) {
 //            获取注解上的写入值
 //            该注解执运行一次这个方法，其他地方加了也无效化
-//            System.out.println(bean.getClass().getName());
             EnableFoxServer annotation = bean.getClass().getAnnotation(EnableFoxServer.class);
             if (annotation != null && started) {
                 int port = annotation.port();
