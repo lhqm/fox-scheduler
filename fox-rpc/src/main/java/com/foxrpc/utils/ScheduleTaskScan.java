@@ -14,7 +14,7 @@ import java.util.List;
  * @author 离狐千慕
  * @version 1.0
  * @date 2023/7/24 11:35
- * 扫描指定的包路径下包含某个注解的方法和
+ * 扫描指定的包路径下包含任务注解注解的方法
  */
 public class ScheduleTaskScan {
     public static List<TaskedMethod> processAnnotations(String packageName) throws ClassNotFoundException, IOException {

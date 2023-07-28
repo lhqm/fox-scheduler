@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,12 +21,12 @@ import java.util.List;
  * @version 1.0
  * @date 2023/7/26 17:03
  */
-@Aspect
 @Slf4j
 @Component
+@Async
 public class FoxScheduleAspect {
     //    配置扫描路径
-    @Value(value = "${fox.schedule.path:com}")
+    @Value(value = "${fox.schedule.path:}")
     private String packageName;
     //    配置调度方案名称
     @Value(value = "${fox.schedule.name:未命名调度客户端}")
@@ -43,7 +46,7 @@ public class FoxScheduleAspect {
 //        没有设置外置包名，通过仲裁获取注解值的包名
         log.info("等待注册...");
         log.info("客户端主体程序已启动,开始注册调度方法");
-        if (packageName.equals("com")){
+        if (packageName.trim().equals("")){
 //            获取注解，通过注解来判断是否有包名，如果还没有，就直接扫描全包
             log.warn("未检索到文件配置中的扫描路径配置,fox-scheduler将向下搜索...");
 //            不为以下三种不可被扫描的状况，赋值

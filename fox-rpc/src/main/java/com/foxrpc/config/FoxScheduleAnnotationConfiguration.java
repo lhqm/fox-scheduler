@@ -9,6 +9,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
@@ -23,7 +25,11 @@ public class FoxScheduleAnnotationConfiguration {
     private FoxScheduleAspect foxScheduleAspect;
 
     @PostConstruct
-    public void executeOnAnnotation() throws Throwable {
+    public void executeOnAnnotation() {
+        Map<String, Object> withAnnotation = applicationContext.getBeansWithAnnotation(Async.class);
+        withAnnotation.forEach((k,v)->{
+            System.out.println(k);
+        });
         Map<String, Object> beansWithAnnotation = applicationContext.getBeansWithAnnotation(EnableFoxScheduler.class);
         for (Object bean : beansWithAnnotation.values()) {
 //            获取类所在包路径
@@ -41,7 +47,7 @@ public class FoxScheduleAnnotationConfiguration {
     @Bean
     public AspectJExpressionPointcutAdvisor customAnnotationAdvisor() {
         AspectJExpressionPointcutAdvisor advisor = new AspectJExpressionPointcutAdvisor();
-        advisor.setExpression("@annotation(com.fox.annotation.EnableFoxScheduler)");
+        advisor.setExpression("@annotation(com.foxrpc.annotation.EnableFoxScheduler)");
         advisor.setAdvice((MethodInterceptor) methodInvocation -> {
             Object result = methodInvocation.proceed();
             return result;

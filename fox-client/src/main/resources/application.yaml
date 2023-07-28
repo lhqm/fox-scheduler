@@ -1,3 +1,5 @@
+
+
 fox:
 #  接受调度的jar包的配置
   schedule:
@@ -6,3 +8,5 @@ fox:
   server:
     address: "127.0.0.1" #服务地址
     port: 9090 #服务器端口
+server:
+  port: 8081
