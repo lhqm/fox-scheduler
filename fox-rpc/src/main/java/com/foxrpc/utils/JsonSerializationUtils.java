@@ -1,4 +1,4 @@
-package com.fox.utils;
+package com.foxrpc.utils;
 
 import com.alibaba.fastjson.JSON;
 

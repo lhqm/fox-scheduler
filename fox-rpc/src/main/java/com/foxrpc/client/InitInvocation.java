@@ -1,4 +1,4 @@
-package com.fox.client;
+package com.foxrpc.client;
 
 import com.fox.entity.TaskedMethod;
 

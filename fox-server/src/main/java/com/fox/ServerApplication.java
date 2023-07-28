@@ -1,6 +1,6 @@
 package com.fox;
 
-import com.fox.annotation.EnableFoxServer;
+import com.foxrpc.annotation.EnableFoxServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

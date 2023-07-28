@@ -1,6 +1,6 @@
-package com.fox.utils;
+package com.foxrpc.utils;
 
-import com.fox.annotation.FoxSchedule;
+import com.foxrpc.annotation.FoxSchedule;
 import com.alibaba.fastjson.JSONObject;
 import com.fox.entity.TaskedMethod;
 import com.fox.utils.client.PackageScanner;

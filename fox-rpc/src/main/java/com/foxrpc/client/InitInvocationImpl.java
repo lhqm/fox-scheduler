@@ -1,25 +1,22 @@
-package com.fox.client;
+package com.foxrpc.client;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fox.entity.ClientData;
 import com.fox.entity.TaskedMethod;
-import com.fox.protocol.RpcMessage;
-import com.fox.utils.RpcMessageEncoder;
+import com.foxrpc.protocol.RpcMessage;
+import com.foxrpc.utils.RpcMessageEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 

@@ -1,9 +1,9 @@
-package com.fox.handler;
+package com.foxrpc.handler;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fox.entity.ClientData;
-import com.fox.protocol.RpcMessage;
-import com.fox.utils.RpcMessageEncoder;
+import com.foxrpc.protocol.RpcMessage;
+import com.foxrpc.utils.RpcMessageEncoder;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;

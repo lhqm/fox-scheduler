@@ -1,10 +1,10 @@
-package com.fox.utils;
+package com.foxrpc.utils;
 
+import com.foxrpc.protocol.RpcMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.util.CharsetUtil;
-import com.fox.protocol.RpcMessage;
 
 import java.util.List;
 

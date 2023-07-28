@@ -1,6 +1,6 @@
 package com.fox.tasks;
 
-import com.fox.annotation.FoxSchedule;
+import com.foxrpc.annotation.FoxSchedule;
 import com.fox.enums.ScheduleTypeEnum;
 
 /**

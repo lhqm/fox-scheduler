@@ -1,4 +1,4 @@
-package com.fox.annotation;
+package com.foxrpc.annotation;
 
 import com.fox.enums.ScheduleTypeEnum;
 

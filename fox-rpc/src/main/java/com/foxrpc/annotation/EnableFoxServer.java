@@ -1,6 +1,6 @@
-package com.fox.annotation;
+package com.foxrpc.annotation;
 
-import com.fox.aspect.FoxServerAspect;
+import com.foxrpc.aspect.FoxServerAspect;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

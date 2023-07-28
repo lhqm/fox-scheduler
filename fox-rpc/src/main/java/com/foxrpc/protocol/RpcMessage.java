@@ -1,4 +1,4 @@
-package com.fox.protocol;
+package com.foxrpc.protocol;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
-package com.fox.annotation;
+package com.foxrpc.annotation;
 
 
-import com.fox.aspect.FoxScheduleAspect;
+import com.foxrpc.aspect.FoxScheduleAspect;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

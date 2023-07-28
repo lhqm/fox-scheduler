@@ -1,7 +1,7 @@
 package com.fox;
 
 
-import com.fox.annotation.EnableFoxScheduler;
+import com.foxrpc.annotation.EnableFoxScheduler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

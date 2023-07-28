@@ -1,7 +1,7 @@
-package com.fox.config;
+package com.foxrpc.config;
 
-import com.fox.annotation.EnableFoxScheduler;
-import com.fox.aspect.FoxScheduleAspect;
+import com.foxrpc.annotation.EnableFoxScheduler;
+import com.foxrpc.aspect.FoxScheduleAspect;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
