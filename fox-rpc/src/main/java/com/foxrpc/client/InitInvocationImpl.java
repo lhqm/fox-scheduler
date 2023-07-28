@@ -63,7 +63,9 @@ public class InitInvocationImpl implements InitInvocation {
                 ClientData clientData = new ClientData(taskedMethods, name);
                 // 封装到请求消息
                 RpcMessage rpcMessage = new RpcMessage();
-                // 手动放入传递参数的JSON序列化
+                // 手动放入传递参数的JSON序列
+                rpcMessage.setServiceName("com.foxrpc.handler.ClientInit");
+                rpcMessage.setMethodName("initClient");
                 rpcMessage.setParameters(JSONObject.parseObject(JSON.toJSONString(clientData)));
                 // 构造发送
                 ChannelFuture sendFuture = future.channel().writeAndFlush(rpcMessage);
