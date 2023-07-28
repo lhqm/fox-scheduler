@@ -21,27 +21,13 @@ import org.springframework.stereotype.Component;
  * @date 2023/7/27 16:39
  * 服务器切面。用于服务器初始化时监听指定端口
  */
-@Component
 @Slf4j
 public class FoxServerAspect {
-    @Value("${fox.server.port:-1}")
-    private int port;
-
     /**
      * 启动netty服务器
      * @param port 监听端口
      */
-    public void startNetty(int port) throws InterruptedException {
-//        配置文件没配置或者非法，读注解
-        if (this.port<0){
-//            注解上有且合法，直接读注解
-            if (port>0){
-                this.port=port;
-            }else {
-//                全都失效，配置到8000端口
-                this.port=8000;
-            }
-        }
+    public static void startNetty(int port) throws InterruptedException {
 //        开始启动netty
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -60,7 +46,7 @@ public class FoxServerAspect {
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
 
             // 绑定端口，开始接收连接
-            ChannelFuture future = bootstrap.bind(this.port).sync();
+            ChannelFuture future = bootstrap.bind(port).sync();
             System.out.println("启动成功，正在等待客户端请求");
             PrintFireFox.printFireFox();
             // 等待服务器套接字关闭

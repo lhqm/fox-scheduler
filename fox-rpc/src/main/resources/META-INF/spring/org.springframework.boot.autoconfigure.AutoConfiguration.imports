@@ -1,1 +1,2 @@
 #com.fox.annotation.ScheduleAspectConfiguration
+com.foxrpc.config.FoxServerAnnotationConfiguration

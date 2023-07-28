@@ -1,7 +1,5 @@
 package com.foxrpc.annotation;
 
-import com.foxrpc.aspect.FoxServerAspect;
-import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
 
@@ -16,7 +14,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@Import({FoxServerAspect.class})
+//@Import({FoxServerAspect.class})
 public @interface EnableFoxServer {
     int port() default 8000; //本地监听端口。将通过该端口来进行通信
 }
