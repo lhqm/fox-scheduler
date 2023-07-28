@@ -5,15 +5,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.fox.entity.ClientData;
 import com.fox.entity.TaskedMethod;
 import com.fox.utils.banner.PrintFireFox;
+import com.foxrpc.handler.ClientHandler;
 import com.foxrpc.protocol.RpcMessage;
+import com.foxrpc.utils.RpcMessageDecoder;
 import com.foxrpc.utils.RpcMessageEncoder;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -44,6 +44,7 @@ public class InitInvocationImpl implements InitInvocation {
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
                             ch.pipeline().addLast(new RpcMessageEncoder()); // 注册编码器
+                            ch.pipeline().addLast(new RpcMessageDecoder()); // 注册解码器
                             ch.pipeline().addLast(new ClientHandler());
                         }
                     });
@@ -90,16 +91,6 @@ public class InitInvocationImpl implements InitInvocation {
             }
         } finally {
             group.shutdownGracefully();
-        }
-    }
-
-    private static class ClientHandler extends SimpleChannelInboundHandler<Object> {
-        @Override
-        protected void channelRead0(ChannelHandlerContext context, Object msg) {
-            // 处理服务端响应
-            ByteBuf buf = (ByteBuf) msg;
-            System.out.println(buf.toString(CharsetUtil.UTF_8));
-            context.close();
         }
     }
 }

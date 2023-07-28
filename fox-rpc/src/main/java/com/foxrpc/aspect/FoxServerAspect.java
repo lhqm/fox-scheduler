@@ -3,6 +3,7 @@ package com.foxrpc.aspect;
 import com.foxrpc.handler.ServerHandler;
 import com.foxrpc.utils.RpcMessageDecoder;
 import com.fox.utils.banner.PrintFireFox;
+import com.foxrpc.utils.RpcMessageEncoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -39,6 +40,7 @@ public class FoxServerAspect {
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
                             ch.pipeline().addLast(new RpcMessageDecoder()); // 解码器
+                            ch.pipeline().addLast(new RpcMessageEncoder()); // 编码器
                             ch.pipeline().addLast(new ServerHandler()); // 服务端处理器
                         }
                     })
